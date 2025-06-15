@@ -27,6 +27,8 @@ var directors []Director
 
 func main(){
 	r := mux.NewRouter()
+	movies = append(movies, Movie{ID: "1", Isbn: "438743", Title: "Movie One", Director: &Director{FirstName: "John", LastName: "Doe"}})
+	movies = append(movies, Movie{ID: "2", Isbn: "438744", Title: "Movie Two", Director: &Director{FirstName: "Jane", LastName: "Doe"}})
 	r.HandleFunc("/movies",getAllMovies).Methods("GET")
 	r.HandleFunc("/movies/{id}",getMovieById).Methods("GET")
 	r.HandleFunc("movies",saveMovie).Methods("POST")
@@ -37,6 +39,7 @@ func main(){
 	log.Fatal(http.ListenAndServe(":8000",r))
 }
 
-func getAllMovies(){
-
+func getAllMovies(w http.ResponseWriter,r *http.Request){
+	w.Header().Set("Content-Type","application/json")
+	json.NewEncoder(w).Encode(movies)
 }
