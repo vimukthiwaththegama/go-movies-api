@@ -1,2 +1,2 @@
-# go-movies-api
-practice project -GO
+Go (Golang) REST API to do basic CRUD operations
+
