@@ -32,7 +32,7 @@ func main() {
 	movies = append(movies, Movie{ID: "2", Isbn: "438744", Title: "Movie Two", Director: &Director{FirstName: "Jane", LastName: "Doe"}})
 	r.HandleFunc("/movies", getAllMovies).Methods("GET")
 	r.HandleFunc("/movies/{id}", getMovieById).Methods("GET")
-	r.HandleFunc("movies", saveMovie).Methods("POST")
+	r.HandleFunc("/movies", saveMovie).Methods("POST")
 	r.HandleFunc("/movies/{id}", updateMovie).Methods("PUT")
 	r.HandleFunc("/movies/{id}", deleteMovie).Methods("DELETE")
 
@@ -62,7 +62,7 @@ func getMovieById(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	for _, item := range movies {
 		if item.ID == params["id"] {
-			return
+			json.NewEncoder(w).Encode(item)
 		}
 	}
 }
